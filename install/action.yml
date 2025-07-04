@@ -1,0 +1,25 @@
+name: Install Dev Proxy
+description: Install Dev Proxy with optional version specification
+inputs:
+  version:
+    description: Version of Dev Proxy to install (e.g., v0.29.2). If not specified, the latest version will be installed.
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: Install Dev Proxy
+      id: install
+      run: |
+        echo "🔧 Installing Dev Proxy..."
+
+        # Construct the installation command
+        if [ -n "${{ inputs.version }}" ]; then
+          echo "📋 Installing Dev Proxy version: ${{ inputs.version }}"
+          bash -c "$(curl -sL https://aka.ms/devproxy/setup.sh)" -- "${{ inputs.version }}"
+        else
+          echo "📋 Installing latest version of Dev Proxy"
+          bash -c "$(curl -sL https://aka.ms/devproxy/setup.sh)"
+        fi
+
+        echo "✅ Dev Proxy installed successfully!"
+      shell: bash
