@@ -1,0 +1,46 @@
+name: Test Dev Proxy Actions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-install-start:
+    name: Test Dev Proxy Actions
+    runs-on: ubuntu-latest
+    env:
+      LOG_FILE: devproxy.log
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Intall Dev Proxy
+        id: install-latest
+        uses: ./install
+
+      - name: Start Dev Proxy
+        id: start-devproxy
+        uses: ./start
+        with:
+          logFile: ${{ env.LOG_FILE }}
+
+      - name: Start recording
+        id: start-recording
+        uses: ./record-start
+
+      - name: Send request
+        id: send-request
+        run: |
+          curl -ikx http://127.0.0.1:8000 https://jsonplaceholder.typicode.com/posts
+
+      - name: Stop recording
+        id: stop-recording
+        uses: ./record-stop
+
+      - name: Stop Dev Proxy
+        id: stop-devproxy
+        uses: ./stop
+
+      - name: Show logs
+        run: |
+          echo "Dev Proxy logs:"
+          cat ${{ env.LOG_FILE }}

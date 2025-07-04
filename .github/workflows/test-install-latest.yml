@@ -1,0 +1,30 @@
+name: Test Install Latest Version
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-install-latest:
+    name: Test Install Latest Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test Install Latest
+        id: install-latest
+        uses: ./install
+
+      - name: Verify Installation
+        run: |
+          # Check if devproxy binary exists
+          if [ -f "./devproxy/devproxy" ]; then
+            echo "✅ Dev Proxy binary found"
+            ./devproxy/devproxy --version || echo "Version check failed but binary exists"
+          elif command -v devproxy &> /dev/null; then
+            echo "✅ Dev Proxy found in PATH"
+            devproxy --version
+          else
+            echo "❌ Dev Proxy not found"
+            exit 1
+          fi
