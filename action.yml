@@ -1,0 +1,11 @@
+name: Dev Proxy
+description: Actions for using Dev Proxy in GitHub Actions workflows
+author: Dev Proxy
+runs:
+  using: composite
+  steps:
+    - name: Stub
+      run: |
+        echo 'This is a stub. Read [the documentation](https://aka.ms/devproxy) instead.'
+        exit 1
+      shell: bash
