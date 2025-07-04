@@ -1,0 +1,12 @@
+name: Stop recording
+description: Stop recording
+runs:
+  using: composite
+  steps:
+    - name: Stop recording
+      id: stop
+      run: |
+        curl -X POST http://127.0.0.1:8897/proxy \
+          -H "Content-Type: application/json" \
+          -d '{"recording": false}'
+      shell: bash
