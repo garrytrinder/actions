@@ -1,0 +1,10 @@
+name: Stop Dev Proxy
+description: Stop Dev Proxy
+runs:
+  using: composite
+  steps:
+    - name: Stop Dev Proxy
+      id: stop
+      run: |
+        curl -X POST http://127.0.0.1:8897/proxy/stopproxy
+      shell: bash
