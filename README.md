@@ -18,7 +18,7 @@ Install Dev Proxy in your workflow. You can specify a version or use the latest.
 
 ```yaml
 - name: Install Dev Proxy
-  uses: dev-proxy-tools/actions/install@v0
+  uses: dev-proxy-tools/actions/install@v1
   with:
     version: v0.29.2
 ```
@@ -35,7 +35,7 @@ Start Dev Proxy with optional configuration file. Dev Proxy will run in the back
 
 ```yaml
 - name: Start Dev Proxy
-  uses: dev-proxy-tools/actions/start@v0
+  uses: dev-proxy-tools/actions/start@v1
   with:
     log-file: devproxy.log           # optional, defaults to devproxy.log
     config-file: ./devproxyrc.json   # optional, will use default configuration if not provided
@@ -56,7 +56,7 @@ Stop the running Dev Proxy instance.
 
 ```yaml
 - name: Stop Dev Proxy
-  uses: dev-proxy-tools/actions/stop@v0
+  uses: dev-proxy-tools/actions/stop@v1
 ```
 
 ### Record Start
@@ -65,7 +65,7 @@ Start recording mode.
 
 ```yaml
 - name: Start recording
-  uses: dev-proxy-tools/actions/record-start@v0
+  uses: dev-proxy-tools/actions/record-start@v1
 ```
 
 ### Record Stop
@@ -74,7 +74,7 @@ Stop recording mode.
 
 ```yaml
 - name: Stop recording
-  uses: dev-proxy-tools/actions/record-stop@v0
+  uses: dev-proxy-tools/actions/record-stop@v1
 ```
 
 ## License
