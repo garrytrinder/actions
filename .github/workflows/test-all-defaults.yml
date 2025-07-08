@@ -1,14 +1,12 @@
-name: Test Dev Proxy Actions
+name: Test Dev Proxy Actions with defaults
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-install-start:
+  test-dev-proxy-actions-defaults:
     name: Test Dev Proxy Actions
     runs-on: ubuntu-latest
-    env:
-      LOG_FILE: devproxy.log
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,4 +35,4 @@ jobs:
       - name: Show logs
         run: |
           echo "Dev Proxy logs:"
-          cat ${{ env.LOG_FILE }}
+          cat devproxy.log
