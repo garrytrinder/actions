@@ -1,6 +1,9 @@
 name: Dev Proxy Actions
 description: Actions for using Dev Proxy in GitHub Actions workflows
 author: Dev Proxy
+branding:
+  icon: share-2
+  color: green
 runs:
   using: composite
   steps:
