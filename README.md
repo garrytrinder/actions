@@ -12,6 +12,9 @@ A collection of GitHub Actions for using [Dev Proxy](https://aka.ms/devproxy) in
 
 ## Usage
 
+> [!IMPORTANT]  
+> Dev Proxy Actions support Linux based runners only.
+
 ### Install
 
 Install Dev Proxy in your workflow. You can specify a version or use the latest.
@@ -31,7 +34,7 @@ Install Dev Proxy in your workflow. You can specify a version or use the latest.
 
 ### Start
 
-Start Dev Proxy with optional configuration file. Dev Proxy will run in the background and log its output to a specified file.
+Start Dev Proxy with optional configuration file. Dev Proxy will run in the background and log its output to a log file.
 
 ```yaml
 - name: Start Dev Proxy
@@ -41,6 +44,12 @@ Start Dev Proxy with optional configuration file. Dev Proxy will run in the back
     config-file: ./devproxyrc.json   # optional, will use default configuration if not provided
     auto-stop: true                  # optional, defaults to false
 ```
+
+This action automatically:
+ 
+ - Installs and trusts Dev Proxy certificate on the runner.
+ - Sets the `http_proxy` and `https_proxy` environment variables to `http://127.0.0.1:8000`, allowing subsequent steps to route HTTP and HTTPS traffic through Dev Proxy.
+ - Registers a post-step that will stop Dev Proxy and clean up the environment variables when the workflow completes, unless `auto-stop` is set to `false`.
 
 **Inputs:**
 
@@ -59,6 +68,8 @@ Stop the running Dev Proxy instance.
   uses: dev-proxy-tools/actions/stop@v1
 ```
 
+This action resets the `http_proxy` and `https_proxy` environment variables to empty strings, effectively disabling the Dev Proxy for subsequent steps.
+
 ### Record Start
 
 Start recording mode.
@@ -75,6 +86,48 @@ Stop recording mode.
 ```yaml
 - name: Stop recording
   uses: dev-proxy-tools/actions/record-stop@v1
+```
+
+## Example Workflow
+
+The following example demonstrates how to use the Dev Proxy actions in a GitHub Actions workflow.
+
+```yaml
+name: Example Dev Proxy workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  example-dev-proxy:
+    name: Example Dev Proxy Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Intall Dev Proxy
+        id: install-latest
+        uses: dev-proxy-tools/actions/install@v1
+
+      - name: Start Dev Proxy
+        id: start-devproxy
+        uses: dev-proxy-tools/actions/start@v1
+
+      - name: Start recording
+        id: start-recording
+        uses: dev-proxy-tools/actions/record-start@v1
+
+      - name: Send request
+        id: send-request
+        run: |
+          curl -ikx http://127.0.0.1:8000 https://jsonplaceholder.typicode.com/posts
+
+      - name: Stop recording
+        id: stop-recording
+        uses: dev-proxy-tools/actions/record-stop@v1
+
+      - name: Show logs
+        run: |
+          echo "Dev Proxy logs:"
+          cat devproxy.log
 ```
 
 ## License
