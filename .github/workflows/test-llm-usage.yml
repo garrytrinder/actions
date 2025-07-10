@@ -1,0 +1,66 @@
+name: Test Dev Proxy LLM Usage with Playwright
+
+on:
+  workflow_dispatch:
+
+permissions:
+  models: read
+
+jobs:
+  test-playwright-web-app:
+    name: Dev Proxy integration with Playwright
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update env.js
+        run: |
+          echo "Updating env.js..."
+          echo "export const apiKey = '${{ secrets.GITHUB_TOKEN }}';" > ./js/env.js
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./tests/llm-usage
+        run: npm ci
+
+      - name: Install Edge browser
+        run: npm run install:msedge
+
+      - name: Install Dev Proxy
+        uses: ./install@v1
+        with:
+          version: v1.0.0-beta.3
+
+      - name: Start Dev Proxy
+        uses: ./start@v1
+        with:
+          config-file: "./tests/llm-usage/.devproxy/devproxyrc.json"
+          
+      - name: Install the Dev Proxy certificate for Chromium
+        uses: ./chromium-cert@v1
+
+      - name: Start recording
+        uses: ./record-start@v1
+
+      - name: Run Playwright tests
+        working-directory: ./tests/llm-usage
+        run: npm test
+
+      - name: Stop recording
+        uses: ./record-stop@v1
+
+      - name: Update job summary
+        run: |
+          echo OpenAITelemetryPlugin_MarkdownReporter.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Show logs
+        if: always()
+        run: |
+          echo "Dev Proxy logs:"
+          cat devproxy.log
