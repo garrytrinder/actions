@@ -1,0 +1,56 @@
+name: Test Dev Proxy integration with Playwright
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-playwright-web-app:
+    name: Dev Proxy integration with Playwright
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Edge browser
+        run: npm run install:msedge
+
+      - name: Install Dev Proxy
+        uses: dev-proxy-tools/actions/install@v1
+        with:
+          version: v0.29.2
+
+      - name: Start Dev Proxy
+        uses: dev-proxy-tools/actions/start@v1
+      
+      - name: Install the Dev Proxy certificate for Chromium
+        run: |
+          # From: https://www.eliostruyf.com/playwright-microsoft-dev-proxy-github-actions/
+          echo "Export the Dev Proxy's Root Certificate"
+          openssl pkcs12 -in ~/.config/dev-proxy/rootCert/rootCert.pfx -clcerts -nokeys -out dev-proxy-ca.crt -passin pass:""
+
+          # echo "Installing certutil"
+          sudo apt install libnss3-tools
+
+          # echo "Adding certificate to the NSS database for Chromium"
+          mkdir -p $HOME/.pki/nssdb
+          certutil --empty-password -d $HOME/.pki/nssdb -N
+          certutil -d sql:$HOME/.pki/nssdb -A -t "CT,," -n dev-proxy-ca.crt -i dev-proxy-ca.crt
+          echo "Certificate trusted."
+      
+      - name: Run Playwright tests
+        run: npm test
+
+      - name: Show logs
+        if: always()
+        run: |
+          echo "Dev Proxy logs:"
+          cat devproxy.log
