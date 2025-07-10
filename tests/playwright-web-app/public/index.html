@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web App</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center">
+    <div class="text-center max-w-4xl mx-auto px-4">
+        <!-- Posts Section -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Posts</h2>
+            <div id="posts" class="space-y-6">
+                <!-- posts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch posts from API
+        async function fetchPosts() {
+            try {
+                const response = await fetch('https://api.blog.com/posts');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data.posts;
+            } catch (error) {
+                console.error('Failed to fetch posts:', error);
+                // Return empty array if fetch fails
+                return [];
+            }
+        }
+
+        // Function to format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Function to render posts
+        function renderPosts(posts) {
+            const container = document.getElementById('posts');
+
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <p class="text-gray-500 text-lg">No posts available at the moment.</p>
+                        <p class="text-gray-400 text-sm mt-2">Please try again later.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const postsHTML = posts.map(post => `
+                <article class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200 text-left">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800 hover:text-blue-600 cursor-pointer">
+                            ${post.title}
+                        </h3>
+                        <span class="text-sm text-gray-500 whitespace-nowrap ml-4">${post.readTime}</span>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        ${post.excerpt}
+                    </p>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <div class="flex items-center space-x-2">
+                            <span>By ${post.author}</span>
+                            <span>•</span>
+                            <span>${formatDate(post.date)}</span>
+                        </div>
+                        <button class="text-blue-600 hover:text-blue-800 font-medium">
+                            Read more →
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+
+            container.innerHTML = postsHTML;
+        }
+
+        // Function to show loading state
+        function showLoading() {
+            const container = document.getElementById('posts');
+            container.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <p class="text-gray-500 mt-4">Loading posts...</p>
+                </div>
+            `;
+        }
+
+        // Load posts when the page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            showLoading();
+            const posts = await fetchPosts();
+            renderPosts(posts);
+        });
+    </script>
+</body>
+
+</html>

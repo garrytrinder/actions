@@ -1,0 +1,13 @@
+node_modules
+
+# Playwright Test Reports
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Playwright browsers
+.playwright/
+
+# Screenshots and videos
+screenshots/
+videos/

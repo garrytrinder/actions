@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/dev-proxy/main/schemas/v0.29.2/mockresponseplugin.mocksfile.schema.json",
+  "mocks": [
+    {
+      "request": {
+        "url": "https://api.blog.com/posts",
+        "method": "GET"
+      },
+      "response": {
+        "statusCode": 200,
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ],
+        "body": {
+          "posts": [
+            {
+              "id": 1,
+              "title": "Getting Started with Dev Proxy",
+              "excerpt": "Learn how to use Dev Proxy to simulate API responses and test your applications more effectively.",
+              "date": "2025-07-08",
+              "author": "John Doe",
+              "readTime": "5 min read"
+            },
+            {
+              "id": 2,
+              "title": "Building Better APIs with Mocking",
+              "excerpt": "Discover best practices for API mocking and how it can improve your development workflow.",
+              "date": "2025-07-06",
+              "author": "Jane Smith",
+              "readTime": "7 min read"
+            },
+            {
+              "id": 3,
+              "title": "CI/CD Integration with GitHub Actions",
+              "excerpt": "Automate your testing pipeline by integrating Dev Proxy with GitHub Actions for continuous integration.",
+              "date": "2025-07-04",
+              "author": "Mike Johnson",
+              "readTime": "6 min read"
+            },
+            {
+              "id": 4,
+              "title": "Advanced Configuration Techniques",
+              "excerpt": "Deep dive into advanced Dev Proxy configuration options to customize your testing environment.",
+              "date": "2025-07-02",
+              "author": "Sarah Wilson",
+              "readTime": "8 min read"
+            },
+            {
+              "id": 5,
+              "title": "Debugging Network Issues",
+              "excerpt": "Tips and tricks for debugging network-related issues in your applications using proxy tools.",
+              "date": "2025-06-30",
+              "author": "Alex Brown",
+              "readTime": "4 min read"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

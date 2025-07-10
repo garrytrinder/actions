@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/dev-proxy/main/schemas/v0.29.2/rc.schema.json",
+  "plugins": [
+    {
+      "name": "MockResponsePlugin",
+      "enabled": true,
+      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
+      "configSection": "mockResponsePlugin"
+    },
+    {
+      "name": "LatencyPlugin",
+      "enabled": true,
+      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
+      "configSection": "latencyPlugin"
+    }
+  ],
+  "urlsToWatch": [
+    "https://api.blog.com/*"
+  ],
+  "mockResponsePlugin": {
+    "mocksFile": "mocks.json"
+  },
+  "latencyPlugin": {
+    "minDelayMs": 200,
+    "maxDelayMs": 800
+  }
+}
