@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Update env.js
+        working-directory: ./tests/llm-usage
         run: |
           echo "Updating env.js..."
           echo "export const apiKey = '${{ secrets.GITHUB_TOKEN }}';" > ./js/env.js
