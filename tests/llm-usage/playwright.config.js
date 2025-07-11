@@ -40,6 +40,7 @@ export default defineConfig({
     command: 'npm start',
     port: 8007,
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000
+    timeout: 120 * 1000,
+    ignoreHTTPSErrors: true
   },
 });
