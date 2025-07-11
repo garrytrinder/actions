@@ -54,8 +54,8 @@ jobs:
         working-directory: ./tests/llm-usage
         run: npm test
 
-      # - name: Stop recording
-      #   uses: ./record-stop
+      - name: Stop recording
+        uses: ./record-stop
 
       - name: Upload Dev Proxy reports
         uses: actions/upload-artifact@v4
