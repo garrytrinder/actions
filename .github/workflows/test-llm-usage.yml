@@ -47,15 +47,15 @@ jobs:
       - name: Install the Dev Proxy certificate for Chromium
         uses: ./chromium-cert
 
-      - name: Start recording
-        uses: ./record-start
+      # - name: Start recording
+      #   uses: ./record-start
 
       - name: Run Playwright tests
         working-directory: ./tests/llm-usage
         run: npm test
 
-      - name: Stop recording
-        uses: ./record-stop
+      # - name: Stop recording
+      #   uses: ./record-stop
 
       - name: Upload Dev Proxy reports
         uses: actions/upload-artifact@v4
@@ -65,7 +65,7 @@ jobs:
 
       - name: Update job summary
         run: |
-          echo OpenAITelemetryPlugin_MarkdownReporter.md >> $GITHUB_STEP_SUMMARY
+          cat OpenAITelemetryPlugin_MarkdownReporter.md >> $GITHUB_STEP_SUMMARY
 
       - name: Show logs
         if: always()
