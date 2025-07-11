@@ -17,9 +17,11 @@ jobs:
 
       - name: Update env.js
         working-directory: ./tests/llm-usage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Updating env.js..."
-          echo "export const apiKey = '${{ secrets.GITHUB_TOKEN }}';" > ./js/env.js
+          echo "export const apiKey = '$GITHUB_TOKEN';" > ./js/env.js
 
       - name: Install Node.js
         uses: actions/setup-node@v4
