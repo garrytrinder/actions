@@ -55,9 +55,11 @@ jobs:
         run: npm test
 
       - name: Stop recording
+        if: always()
         uses: ./record-stop
 
       - name: Upload Dev Proxy reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Reports
