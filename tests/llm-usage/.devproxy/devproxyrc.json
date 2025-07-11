@@ -49,7 +49,7 @@
     "includeCosts": true,
     "pricesFile": "azure-ai-prices.json"
   },
-  "logLevel": "information",
+  "logLevel": "trace",
   "newVersionNotification": "stable",
   "showSkipMessages": true
 }
