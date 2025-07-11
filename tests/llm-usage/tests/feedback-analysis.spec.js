@@ -11,7 +11,7 @@ test.describe('Session Evaluations Analysis', () => {
       console.log(`Request: ${request.method()} ${request.url()}`);
     });
     page.on('response', async response => {
-      console.log(`Response: ${response.status()} ${response.url()} ${await response.text()}`);
+      console.log(`Response: ${response.status()} ${response.url()}`);
     });
 
     // increase timeout to handle retries
