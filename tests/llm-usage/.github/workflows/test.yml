@@ -34,7 +34,7 @@ jobs:
       - name: Install Dev Proxy
         uses: dev-proxy-tools/actions/install@v1
         with:
-          version: v1.0.0-beta.3
+          version: v1.0.0-beta.4
 
       - name: Start Dev Proxy
         uses: dev-proxy-tools/actions/start@v1
@@ -51,6 +51,12 @@ jobs:
       - name: Stop recording
         uses: dev-proxy-tools/actions/record-stop@v1
 
+      - name: Upload Dev Proxy reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reports
+          path: ./*Reporter*
+
       - name: Update job summary
         run: |
           echo OpenAITelemetryPlugin_MarkdownReporter.md >> $GITHUB_STEP_SUMMARY
@@ -60,3 +66,10 @@ jobs:
         run: |
           echo "Dev Proxy logs:"
           cat devproxy.log
+
+      - name: Upload Dev Proxy logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: devproxy.log
+          path: devproxy.log

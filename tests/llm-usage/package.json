@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npx http-server -c-1 -p 8007",
+    "start": "http-server -c-1 -p 8007",
     "test": "playwright test",
     "install:msedge": "npx playwright install msedge"
   },
@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.40.0"
+    "@playwright/test": "^1.54.0"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
   }
 }

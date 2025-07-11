@@ -6,28 +6,33 @@
       "enabled": true,
       "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
       "configSection": "apiLatencyPlugin",
-      "urlsToWatch": ["http://api.ecs.eu/*"]
+      "urlsToWatch": [
+        "http://api.ecs.eu/*"
+      ]
     },
     {
       "name": "OpenAITelemetryPlugin",
       "enabled": true,
       "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
-      "configSection": "openAITelemetryPlugin",
-      "urlsToWatch": ["https://models.github.ai/inference/chat/completions"]
+      "configSection": "openAITelemetryPlugin"
     },
     {
       "name": "CrudApiPlugin",
       "enabled": true,
       "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
       "configSection": "feedbackApi",
-      "urlsToWatch": ["http://api.ecs.eu/feedback"]
+      "urlsToWatch": [
+        "http://api.ecs.eu/feedback"
+      ]
     },
     {
       "name": "MarkdownReporter",
       "enabled": true,
-      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll",
-      "urlsToWatch": ["https://models.github.ai/inference/chat/completions"]
+      "pluginPath": "~appFolder/plugins/DevProxy.Plugins.dll"
     }
+  ],
+  "urlsToWatch": [
+    "https://models.github.ai/inference/chat/completions*"
   ],
   "feedbackApi": {
     "$schema": "https://raw.githubusercontent.com/dotnet/dev-proxy/main/schemas/v1.0.0/crudapiplugin.schema.json",
