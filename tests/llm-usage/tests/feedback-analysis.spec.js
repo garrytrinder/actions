@@ -5,6 +5,15 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Session Evaluations Analysis', () => {
   test('loads feedback, analyzes, and displays pills', async ({ page, baseURL }) => {
+
+    // log network requests for debugging
+    page.on('request', request => {
+      console.log(`Request: ${request.method()} ${request.url()}`);
+    });
+    page.on('response', response => {
+      console.log(`Response: ${response.status()} ${response.url()}`);
+    });
+
     // increase timeout to handle retries
     test.slow();
 
