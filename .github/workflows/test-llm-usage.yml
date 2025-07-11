@@ -44,8 +44,8 @@ jobs:
         with:
           config-file: ./tests/llm-usage/.devproxy/devproxyrc.json
           
-      # - name: Install the Dev Proxy certificate for Chromium
-      #   uses: ./chromium-cert
+      - name: Install the Dev Proxy certificate for Chromium
+        uses: ./chromium-cert
 
       - name: Start recording
         uses: ./record-start
