@@ -24,7 +24,8 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     /* Take screenshot on failure */
-    screenshot: 'only-on-failure'
+    screenshot: 'only-on-failure',
+    ignoreHTTPSErrors: true,
   },
 
   /* Configure projects for major browsers */
@@ -40,7 +41,6 @@ export default defineConfig({
     command: 'npm start',
     port: 8007,
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-    ignoreHTTPSErrors: true
+    timeout: 120 * 1000
   },
 });
