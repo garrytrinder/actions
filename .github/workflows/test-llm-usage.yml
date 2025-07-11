@@ -47,8 +47,8 @@ jobs:
       - name: Install the Dev Proxy certificate for Chromium
         uses: ./chromium-cert
 
-      # - name: Start recording
-      #   uses: ./record-start
+      - name: Start recording
+        uses: ./record-start
 
       - name: Run Playwright tests
         working-directory: ./tests/llm-usage
