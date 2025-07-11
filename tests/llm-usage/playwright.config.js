@@ -25,6 +25,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     /* Take screenshot on failure */
     screenshot: 'only-on-failure',
+    /* ignore HTTPS errors when sending network requests */
     ignoreHTTPSErrors: true,
   },
 
