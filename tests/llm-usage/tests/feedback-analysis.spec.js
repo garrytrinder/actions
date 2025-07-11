@@ -24,10 +24,17 @@ test.describe('Session Evaluations Analysis', () => {
 
     // 5. Verify that all feedbacks contain an evaluation pill that contains a value
     const evaluationItems = await page.$$('.evaluation-item');
+    const pillTexts = [];
+    
     for (const item of evaluationItems) {
       const pill = await item.$('.evaluation-pill');
       const pillText = await pill?.innerText();
       expect(pillText && pillText.trim().length).toBeGreaterThan(0);
+      pillTexts.push(pillText?.trim());
     }
+    
+    // Fail if all pills contain "Unknown"
+    const allUnknown = pillTexts.every(text => text === 'Unknown');
+    expect(allUnknown).toBe(false);
   });
 });

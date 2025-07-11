@@ -154,7 +154,7 @@ async function getEvaluationCategory(feedbackText) {
 
   // If we've exhausted all retries, return a default category
   console.warn("Failed to get a valid category after maximum retries");
-  return "useless"; // Default fallback category after all retries fail
+  return "unknown"; // Default fallback category after all retries fail
 }
 
 /**
@@ -200,7 +200,7 @@ async function analyzeFeedback(evaluations) {
       } catch (error) {
         console.error(`Error processing evaluation #${index}:`, error);
         // Set default category for failed analyses
-        evaluation.category = "useless";
+        evaluation.category = "unknown";
         return evaluation;
       }
     });
