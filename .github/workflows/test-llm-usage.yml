@@ -49,7 +49,7 @@ jobs:
 
       - name: Run Playwright tests
         working-directory: ./tests/llm-usage
-        run: npm test
+        run: DEBUG=pw:api npx playwright test
 
       - name: Stop recording
         if: always()
